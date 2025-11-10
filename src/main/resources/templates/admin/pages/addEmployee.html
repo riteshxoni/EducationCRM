@@ -1,0 +1,48 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Add New Employee</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	
+   <div th:replace="admin/components/sidebar :: sidebar"></div>
+   
+    <div class="content">
+        <div id="Dashboard">
+            <h2>Employee Management</h2>
+            <p>Here you can add new Employee</p>
+            <div class="mt-5">
+                <div class="card p-3 mx-auto" style="width: 70%;">
+                    <h3 class="my-2">Add Employee</h3>
+					
+					<div th:if="${success}" class="alert alert-success my-3"><span th:text="${success}"></span></div>
+					<div th:if="${error}" class="alert alert-danger my-3"><span th:text="${error}"></span></div>
+					
+                    <form th:action="@{/admin/addEmployee}" method="post" th:object="${employee}">
+                        <label class="form-label text-secondary">Employee Name :</label>
+                        <input type="text" name="name" class="form-control my-1" required>
+                        <label class="form-label text-secondary">Employee Email :</label>
+                        <input type="email" name="email" class="form-control my-1" required>
+                        <label class="form-label text-secondary">Employee Phone No. :</label>
+                        <input type="text" name="phoneno" class="form-control my-1" required>
+                        <label class="form-label text-secondary">Employee City :</label>
+                        <input type="text" name="city" class="form-control my-1" required>
+                        <button type="submit" class="btn btn-primary my-2">Add Employee</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>
+
+
+
+
+

@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	<div th:replace="admin/components/sidebar :: sidebar"></div>
+    <div class="content">
+        <div id="Dashboard">
+            <h2>Settings</h2>
+            <p>Here you can manage Your Data....</p>
+        </div>
+        <div class="table-responsive">
+           <table class="table table-striped table-bordered table-hover text-center" style="min-width: 800px;">
+               <tr>
+                   <th>Name</th>
+                   <th>Email</th>
+                   <th>Role</th>
+                   <th>Created At</th>
+                   <th>Action</th>
+               </tr>
+               <tr>
+                   <td th:text="${admin.name}"></td>
+                   <td th:text="${admin.email}"></td>
+                   <td th:text="${admin.role}"></td>
+                   <td th:text="${admin.createdDate}"></td>
+                   <td><a href="/admin/changePassword" class="btn btn-danger btn-sm">changePassword</a></td>
+               </tr>
+           </table>
+           
+       </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

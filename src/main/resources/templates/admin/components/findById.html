@@ -1,0 +1,59 @@
+<div th:fragment="findById">
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+ function showdata(event, id)
+ {
+	 event.preventDefault();
+	 
+	 $.ajax(
+		{
+			url: "/admin/getFeedback",
+			method: "GET",
+			data:{feedbackId: id},		
+			success: function(response){
+				if(response.length>0)
+				{
+					let modal = new bootstrap.Modal(document.getElementById('feedback'));
+					
+					$.each(response, function(index, feedback){
+						$("#name").text(feedback.std_name);
+						$("#email").text(feedback.std_email);
+						$("#course").text(feedback.std_course);
+						$("#msg").text(feedback.std_message);
+						$("#date").text(feedback.date);
+						$("#time").text(feedback.time);
+					})
+					
+					modal.show();
+					
+					let url;
+					
+					$("#read").on("click", function(){
+						url = "/admin/readStatus?status=true&id=" + response[0].id;
+						modal.hide();
+						window.location.href = url;
+					});
+					
+					$("#unread").on("click", function(){
+						url = "/admin/readStatus?status=false&id=" + response[0].id;
+						modal.hide();
+						window.location.href = url;
+					});
+					
+				}
+				
+			},
+			error: function(error){
+				console.log(error)
+			}
+		}		 
+	 )
+ }
+
+</script>
+
+
+</div>

@@ -1,0 +1,63 @@
+<div th:fragment="payment">
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		function purchaseCourse(courseName,coursePrice,userName,userEmail,userPhone)
+		{
+		    var options = {
+		    "key": "rzp_test_RWbjjonrGYv3mw", // Enter the Key ID generated from the Dashboard
+		    "amount": coursePrice*100, // Amount is in currency subunits. 
+		    "currency": "INR",
+		    "name": "AR Programming",
+		    "description": "Payment Transaction of " + courseName + " Course",
+		    "image": "https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?semt=ais_hybrid&w=740&q=80",
+		    "handler": function (response){
+				console.log(response);
+				
+				let date = new Date();
+				let dateOfPurchase = date.toLocaleDateString('en-GB')+", "+date.toLocaleTimeString('en-GB', {hour12: true});
+				
+				let orderdata = {
+					courseName: courseName,
+					coursePrice: coursePrice,
+					userEmail: userEmail,
+					dateOfPurchase: dateOfPurchase,
+					rzpPaymentId: response.razorpay_payment_id
+				}
+				
+				$.ajax(
+					{
+						type: "POST",
+						url: "/api/createOrder",
+						contentType: "application/json",
+						data: JSON.stringify(orderdata),
+						success:function(){alert("Order Successfully... Transaction history created..");window.location.href= '/mycourses'},
+						error:function(){alert("Order Successfully... Transaction history not created..");}
+					}
+					);
+				
+				
+		    },
+		    "prefill": {
+		        "name": userName,
+		        "email": userEmail,
+		        "contact": userPhone
+		    },
+		    "notes": {
+		        "courseName": courseName
+		    },
+		    "theme": {
+		        "color": "#3399cc"
+		    }
+		};
+		var rzp1 = new Razorpay(options);
+
+		rzp1.on('payment.failed', function (response){
+				alert("Payment Failed...");
+		        console.log(response);
+		});
+
+		rzp1.open();
+		} 
+	</script>
+</div>

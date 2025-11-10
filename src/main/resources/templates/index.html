@@ -1,0 +1,101 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to ARProgramming</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+  	<div th:if="${sessionUser == null OR sessionUser ==''}">
+		<div th:replace="components/header :: header"></div>
+  	</div>
+  	<div th:unless="${sessionUser == null OR sessionUser ==''}">
+		<div th:replace="customer/components/header :: header"></div>
+  	</div>
+    
+    <!-- Banner Start-->
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+                <img src="./img/banner/1.png" class="d-block w-100">
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+                <img src="./img/banner/2.png" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="./img/banner/3.png" class="d-block w-100">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!-- Banner End-->
+
+    <!-- Course Start-->
+     <div class="container mt-3 my-1 mb-3" >
+        <div class="display-4 bg-light text-center fw-medium my-3">Our Courses</div>
+        <div class="row g-4 justify-content-center">
+            <div th:each="course : ${courses}" class="col-10 col-md-6 col-lg-3">
+                <div class="card">
+                    <img th:src="@{${course.imageUrl}}" class="card-img-top" alt="${course.name}" height="150px" width="100%">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${course.name}" style="font-size: 100%;"></h5>
+                        <p class="card-text" th:text="${course.description}" style="min-height: 50px;"></p>
+						<div th:if="${sessionUser}">
+	                        <div th:if="${#lists.contains(purchasedList, course.name)}">
+								<p class="text-success">Course Already Purchased...</p>
+								<a href="/mycourses" class="btn btn-success">Start Course</a>
+							</div>
+							<div th:unless="${#lists.contains(purchasedList, course.name)}">
+								<p>
+									<span class="fw-bold" >Price : </span>
+									<del th:text="'Rs. '+${course.orignalPrice}"></del>
+									<span class="bg-info p-1 text-white rounded float-end" th:text="'Rs. '+${course.discountedPrice}"></span>
+								</p>
+								<div>
+									<a href="#" class="btn btn-primary"
+									th:data-courseName="${course.name}"
+									th:data-coursePrice="${course.discountedPrice}"
+									th:data-userName="${sessionUser.name}"
+									th:data-userEmail="${sessionUser.email}"
+									th:data-userPhone="${sessionUser.phoneno}"
+									onclick="purchaseCourse(this.getAttribute('data-courseName'),this.getAttribute('data-coursePrice'),this.getAttribute('data-userName'),this.getAttribute('data-userEmail'),this.getAttribute('data-userPhone'),this.getAttribute('data-courseName'),this.getAttribute('courseName'))">
+									 	Buy Now
+								 	</a>
+								</div>
+							</div>
+						</div>
+						<div th:unless="${sessionUser}">
+							<p>
+								<span class="fw-bold" >Price : </span>
+								<del th:text="'Rs. '+${course.orignalPrice}"></del>
+								<span class="bg-info p-1 text-white rounded float-end" th:text="'Rs. '+${course.discountedPrice}"></span>
+							</p>
+							<a href="/login" class="btn btn-primary">Login to Buy</a>
+						</div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><small class="text-body-secondary" th:text="${course.updatedOn}"></small></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+     </div>
+    <!-- Course End-->
+    <div th:replace="components/footer :: footer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+	
+	<div th:replace="components/payment :: payment"></div>
+	
+	</script>
+  </body>
+</html>

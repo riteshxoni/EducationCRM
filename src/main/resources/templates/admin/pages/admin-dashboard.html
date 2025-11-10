@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  </head>
+  <body>
+	
+	<div th:replace="admin/components/sidebar :: sidebar"></div>
+	
+    <div class="content">
+        <div id="Dashboard">
+            <h2>Admin Dashboard</h2>
+            <p>Dashboard contains the different graphs and charts showing the different details</p>
+        </div>
+        
+        <div class="row mt-5 g-4">
+        
+        	<div class="col-12 col-md-6">
+	        	<div>
+		        	<div class="h1 text-center text-primary my-3">Sales Chart</div>
+		        	<div class="card p-5 shadow-lg border">
+		        		<canvas id="coursesoldChart"></canvas>
+		        	</div>
+		        </div>
+        	</div>
+        	
+        	<div class="col-12 col-md-6">
+	        	<div>
+		        	<div class="h1 text-center text-primary my-3">Date Wise Sales Amounts</div>
+		        	<div class="card p-5 shadow-lg border">
+		        		<canvas id="dateAmountOfSales"></canvas>
+		        	</div>
+		        </div>
+        	</div>
+        </div>
+        
+        <div class="col-8 mx-auto mt-5">
+        	<div class="h1 text-center text-primary my-3">Sales on Dates</div>
+        	<div class="card p-5 shadow-lg border">
+        		<canvas id="myChart"></canvas>
+        	</div>
+        </div>
+        
+    </div>
+    <div th:replace="admin/components/dateAmountOfSales :: dateAmountOfSales"></div>
+    <div th:replace="admin/components/datebysales :: datebysales"></div>
+    <div th:replace="admin/components/coursesoldgraph :: coursesoldgraph"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<div th:fragment="searchByPhoneNo">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+	function searchInquery()
+	{
+		let number = $("#phoneno").val();
+		
+		$.ajax(
+		{
+			url: "api/searchInqueries",
+			type: "GET",
+			data: {phoneno: number},
+			success: function(response){
+				$("#tbody").empty();
+				if(response.length > 0)
+				{
+					$.each(response, function(index, inquery)
+					{
+						let row = `
+							<tr>
+	                           <td>${inquery.interestedCourse}</td>
+	                           <td>${inquery.discussion}</td>
+	                           <td>${inquery.inqueryType}</td>
+	                           <td>${inquery.callType}</td>
+	                           <td>${inquery.inqueryDate}</td>
+	                           <td>${inquery.status}</td>
+	                       </tr>
+						`;
+						
+						$("#tbody").append(row);
+					})
+					
+					$("#inqueryTable").show();
+					$("#continuebtn").show();
+					
+					let customerName = response[0].customerName;
+					$("#customerName").text("Customer Name : " + customerName).show();
+					
+					$("#newbtn").hide();
+					
+					$("#phone").val(number);
+					$("#name").val(customerName);
+					
+					
+				}
+				else
+				{
+					$("#newbtn").show();
+					$("#inqueryTable").hide();
+					$("#continuebtn").hide();
+					$("#customerName").text("No Customer Found").show();
+					$("#phone").val("");
+					$("#name").val("");
+				}
+			},
+			error: function(error)
+			{
+				alert("error"+error);
+			}
+		}
+		);
+	}
+
+</script>
+
+</div>

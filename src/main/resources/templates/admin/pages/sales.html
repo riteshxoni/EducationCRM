@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Sales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	<div th:replace="admin/components/sidebar :: sidebar"></div>
+    <div class="content">
+        <div id="Dashboard">
+            <h2>Employee Sales Information</h2>
+            <p>Below are the details of total sales by individual employees</p>
+        </div>
+        
+        <div class="table-responsive shadow-lg border p-5 col-10 mx-auto mt-5">
+	        <div class="h2 my-4" th:text="'Total sales : Rs. '+ ${totalSales}"></div>
+        	<div class="h2 my-4" th:text="'Total sales by all employees : Rs. '+${totalSalesByEmployee}"></div>
+        	<table class="table table-bordered table-striped table-hover">
+        			<tr>
+        				<th>Employee Name</th>
+        				<th>Employee Email</th>
+        				<th>Employee Phone No.</th>
+        				<th>Employee Total Sales</th>
+        			</tr>
+        			<tr th:each="emp : ${empWithTotalSales}">
+        				<td th:text="${emp[0]}"></td>
+        				<td th:text="${emp[1]}"></td>
+        				<td th:text="${emp[2]}"></td>
+        				<td th:text="${emp[3]}"></td>
+        			</tr>
+        	</table>
+        </div>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

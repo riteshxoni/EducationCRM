@@ -1,0 +1,25 @@
+<aside class="sidebar" th:fragment="sidebar">
+    <p href="" class="nav-link p-3 pb-0">
+        <span th:text="'Welcome : '+${#strings.listSplit(employee.name, ' ')[0]}"></span>
+    </p>
+    <a href="/employee/dashboard" class="nav-link">
+        <i class="bi bi-person-fill"></i>
+        <span>My Profile</span>
+    </a>
+    <a href="/employee/sellCourse" class="nav-link">
+        <i class="bi bi-book-fill"></i>
+        <span>Sell Course</span>
+    </a>
+    <a href="/employee/inquery" class="nav-link">
+        <i class="bi bi-people-fill"></i>
+        <span>Inquery Management</span>
+    </a>
+    <a href="/employee/followUps" class="nav-link">
+        <i class="bi bi-person-lines-fill"></i>
+        <span>Follow Ups</span>
+    </a>
+    <a href="/employee/logout" class="nav-link">
+        <i class="bi bi-box-arrow-in-right"></i>
+        <span>Logout</span>
+    </a>
+</aside>

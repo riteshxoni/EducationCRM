@@ -1,0 +1,41 @@
+<div th:fragment="coursesoldgraph">
+	<script th:inline="javascript">
+		let xVal = /*[[${courseNames}]]*/[];
+		let yVal = /*[[${courseSales}]]*/[];
+		
+		
+		
+		function getRandomColor()
+		{
+			let letters = "0123456789ABCDEF";
+			let color = "#";
+			for(let i=1;i<=6;i++)
+			{
+				let randomIndex = Math.floor(Math.random()*16);
+				let randomCharacter = letters[randomIndex];
+				color = color+randomCharacter;
+			}
+			return color;
+		}
+		
+		
+		
+		let barColors = xVal.map(() => getRandomColor());
+		
+		new Chart("coursesoldChart", {
+		  type: "pie",
+		  data: {
+		    labels: xVal,
+		    datasets: [{
+		      backgroundColor: barColors,
+		      data: yVal
+		    }]
+		  },
+		  options: {
+		    title: {
+		      display: true,
+		    }
+		  }
+		});
+	</script>
+</div>

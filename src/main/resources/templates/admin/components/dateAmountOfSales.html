@@ -1,0 +1,26 @@
+<div th:fragment="dateAmountOfSales">
+
+<script th:inline="javascript">
+let x = /*[[${salesDate}]]*/[];
+let y = /*[[${salesAmount}]]*/[];
+let Color = "blue";
+                              
+new Chart("dateAmountOfSales", {
+  type: "bar",
+  data: {
+    labels: x,
+    datasets: [{
+      backgroundColor: Color,
+      data: y
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true, 
+    }
+  }
+});
+</script>
+
+</div>

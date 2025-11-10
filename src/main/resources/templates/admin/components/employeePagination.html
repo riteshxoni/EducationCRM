@@ -1,0 +1,22 @@
+
+<nav aria-label="Page navigation" th:fragment="employeePagination">
+  <ul class="pagination">
+	
+    <li class="page-item" th:classappend="${employees.hasPrevious()} ? '' : 'disabled'">
+      <a class="page-link" th:href="'/admin/employee-management?page=' + ${employees.number-1}+ '&size=' + ${employees.size}" >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+	
+    <li class="page-item" th:each="i : ${#numbers.sequence(0, employees.totalPages-1)}" th:classappend="${employees.number==i} ? 'active' : ''">
+		<a class="page-link" th:href="'/admin/employee-management?page=' + ${i} + '&size=' + ${employees.size}" th:text="${i+1}"></a>
+	</li>
+	
+    <li class="page-item" th:classappend="${employees.hasNext()} ? '' : 'disabled'">
+      <a class="page-link" th:href="'/admin/employee-management?page=' + ${employees.number+1} + '&size=' + ${employees.size}" >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+	
+  </ul>
+</nav>

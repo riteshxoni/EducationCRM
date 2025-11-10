@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Employee Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	
+	<div th:replace="admin/components/sidebar :: sidebar"></div>
+	
+	<div class="content">
+	        <div id="Dashboard">
+	            <h2 >Employee Management</h2>
+	            <p>Here you can add new employees view employees and delete and update employees</p>
+
+	            <div class="mb-3 float-end">
+	                <a href="/admin/addEmployee" class="btn btn-primary">Add New Employee</a>
+	            </div>
+				
+				<div th:if="${success}" class="alert alert-success my-3"><span th:text="${success}"></span></div>
+				<div th:if="${error}" class="alert alert-danger my-3"><span th:text="${error}"></span></div>
+				
+	            <table class="table table-striped table-bordered table-hover">
+	                <tr>
+	                    <th>Name</th>
+	                    <th>Email</th>
+	                    <th>Phone No.</th>
+						<th>City</th>
+	                    <th>Edit</th>
+	                    <th>Delete</th>
+	                </tr>
+					<div th:replace="admin/components/modal :: modal"></div>
+	                <tr th:each="employee : ${employees.content}">
+	                    <td th:text="${employee.name}"></td>
+	                    <td th:text="${employee.email}"></td>
+						<td th:text="${employee.phoneno}"></td>
+						<td th:text="${employee.city}"></td>
+	                    <td >
+	                        <a th:href="@{/admin/editEmployee(email=${employee.email})}" class="text-decoration-none text-danger fs-1"><i class="bi bi-pencil-square"></i></a>    
+	                    </td>
+	                    <td >
+	                        <a href="#" th:data-employeeEmail="${employee.email}" 
+							onclick="confirmDelete(event, '/admin/deleteEmployee?email='+this.getAttribute('data-employeeEmail'))" 
+							class="text-decoration-none text-danger fs-1">
+							
+							<i class="bi bi-trash3-fill"></i></a>
+							
+	                    </td>
+	                </tr>
+	            </table>
+				<div th:replace="admin/components/employeePagination :: employeePagination"></div>
+	        </div>
+	    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

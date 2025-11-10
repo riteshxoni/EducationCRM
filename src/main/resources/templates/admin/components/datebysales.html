@@ -1,0 +1,28 @@
+<div th:fragment="datebysales">
+<script th:inline="javascript">
+	const xValues = /*[[${dates}]]*/ [];
+	const yValues = /*[[${sales}]]*/ [];
+	
+	let max = Math.max(...yValues)+2;
+	
+	new Chart("myChart", {
+	  type: "line",
+	  data: {
+	    labels: xValues,
+	    datasets: [{
+	      fill: false,
+	      lineTension: 0,
+	      backgroundColor: "rgba(0,0,255,1.0)",
+	      borderColor: "rgba(0,0,255,0.1)",
+	      data: yValues
+	    }]
+	  },
+	  options: {
+	    legend: {display: false},
+	    scales: {
+	      yAxes: [{ticks: {min: 0, max:max}}],
+	    }
+	  }
+	});
+</script>
+</div>

@@ -1,0 +1,56 @@
+<div th:fragment="getInqueryByPhone">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+	function getInquery(number)
+	{	
+		$.ajax(
+		{
+			url: "api/searchInqueries",
+			type: "GET",
+			data: {phoneno: number},
+			success: function(response){
+				$("#tbody").empty();
+				if(response.length > 0)
+				{
+					$.each(response, function(index, inquery)
+					{
+						let row = `
+							<tr>
+	                           <td>${inquery.interestedCourse}</td>
+	                           <td>${inquery.discussion}</td>
+	                           <td>${inquery.inqueryType}</td>
+	                           <td>${inquery.callType}</td>
+	                           <td>${inquery.inqueryDate}</td>
+	                       </tr>
+						`;
+						
+						$("#tbody").append(row);
+					})
+					
+					$("#followUp").show();
+
+					let customerName = response[0].customerName;
+					$("#customerName").text("Customer Name : " + customerName);
+					$("#phone").val(number);
+					$("#name").val(customerName);	
+				}
+				else
+				{
+					$("#followUp").hide();
+					$("#customerName").text("No Customer Found");
+					$("#phone").val("");
+					$("#name").val("");
+				}
+			},
+			error: function(error)
+			{
+				alert("error"+error);
+			}
+		}
+		);
+	}
+
+</script>
+
+</div>

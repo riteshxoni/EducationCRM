@@ -1,0 +1,62 @@
+<div th:fragment="getFollowUpsbydate">
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		
+		$(document).ready(
+				function readyFuntion()
+				{
+					let todayDate = new Date().toISOString().split('T')[0];
+					$("#followUpDate").val(todayDate);
+					getFollowUps(todayDate);
+				}
+		)
+		
+		$("#followUpDate").on("change", function(){
+			let date = $(this).val();
+			getFollowUps(date);
+		})
+		
+		
+		function getFollowUps(date)
+		{
+			$.ajax(
+			{
+				url: "/employee/api/getFollowUps",
+				method: "GET",
+				data: {followUpsdate: date},
+				
+				success: function(response){
+					$("#followuptbody").empty();
+					if(response.length > 0)
+					{
+						$.each(response, function(index, followUp){
+							let row = `
+								<tr>
+		                           <td> ${followUp.phoneno}</td>
+		                           <td> <button class="btn btn-primary" onclick="getInquery(${followUp.phoneno})">Get All Discussion</button> </td>
+		                       </tr>
+							`;
+							$("#followuptbody").append(row);
+						})
+						$("#followupCustomers").show();
+						$("#noFollowUp").hide();
+					}
+					else
+					{
+						$("#followupCustomers").hide();
+						$("#noFollowUp").show();
+					}
+				},
+				
+				error(error)
+				{
+					console.log(error);
+				}
+				
+			})
+		}
+	
+	</script>
+
+</div>

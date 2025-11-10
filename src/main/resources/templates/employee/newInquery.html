@@ -1,0 +1,91 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARProgramming | Employee Add Inquery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/emp_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	<div th:replace="/employee/components/sidebar :: sidebar"></div>
+	<div th:replace="/employee/components/Inquerymodal :: Inquerymodal"></div>
+	<main>
+	       <div class="content">
+	           <div class="border-bottom mb-4">
+	               <h2 th:text="'Welcome : '+${employee.name}"></h2>
+	               <p>Employee Inquery Management Panel here you can add new inquiry</p>
+	           </div>
+			   <div class="col-7 mx-auto border shadow-lg p-5">
+					<h2 class="my-1">Add New Inquiry</h2>
+					<div th:if="${success}" class="alert alert-success mb-3">
+	            		<span th:text="${success}"></span>
+	            	</div>
+	            	<div th:if="${error}" class="alert alert-danger mb-3">
+	            		<span th:text="${error}"></span>
+	            	</div>
+					<form action="/employee/addInquery" method="post" th:object="${inquery}">
+	                   <label class="form-label">Customer Phone No.</label>
+	                   <input type="text" name="phoneno" class="form-control">
+	                   <label class="form-label">Customer Name</label>
+	                   <input type="text" name="customerName" class="form-control">
+	                   <label class="form-label">Intrested Course</label>
+	                   <Select name="interestedCourse" class="form-control">
+	                       <option value="" disabled selected>Select Course</option>
+						   <option th:each="name : ${courseNames}" th:value="${name}" th:text="${name}"></option>
+						   <option value="other">Other Course</option>
+	                   </Select>
+	                   <label class="form-label">Discusstion</label>
+	                   <textarea name="discussion" class="form-control" rows="3"></textarea>
+					   
+	                   <label class="form-label">Inquery Type</label>
+	                   <select name="inqueryType" class="form-control">
+	                       <option value="Call">Call</option>
+	                       <option value="Mail">Mail</option>
+	                       <option value="Website">Website</option>
+	                       <option value="Social Media">Social Media</option>
+	                       <option value="Friend Reference">Friend Reference</option>
+	                       <option value="Advertisements">Advertisements</option>
+	                       <option value="Other">Other</option>
+	                   </select>
+	                   <label class="form-label">Call Type</label>
+	                   <Select name="callType" class="form-control">
+	                       <option value="Inbound Call">Inbound Call(Customer Calls to Company)</option>
+	                       <option value="Outbound Call">Outbound Call(Company Calls to Customer)</option>
+	                   </Select>
+	                   <label class="form-label">Status</label>
+	                   <Select name="status" id="status" class="form-control" onchange="toggleDate()">
+	                       <option value="Intrested-(Follow Up)">Intrested-(Follow Up)</option>
+	                       <option value="Intrested-(Closed)">Intrested-(Closed)</option>
+	                       <option value="Not Intrested-(Closed)">Not Intrested-(Closed)</option>
+	                       <option value="Purchased-(Closed)">Purchased-(Closed)</option>
+	                       <option value="Other-(Closed)">Other-(Closed)</option>
+	                   </Select>
+					   <div id="date">
+							<label class="form-label">Follow Up Date</label>
+					   		<input type="date" name="followUpDate" class="form-control">
+					   </div>
+	               	   <button type="submit" class="btn btn-primary my-3">Add Inquery</button>
+		           </form>
+			   </div>
+	       </div>
+	   </main>
+	   <script>
+			function toggleDate()
+			{
+				let status = document.getElementById("status").value;
+				let date = document.getElementById("date");
+				if(status === "Intrested-(Follow Up)")
+				{
+					date.style.display = "block";
+				}
+				else
+				{
+					date.style.display = "none";
+				}
+			}
+	   </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+
+<nav aria-label="Page navigation" th:fragment="pagination">
+  <ul class="pagination">
+	
+    <li class="page-item" th:classappend="${courses.hasPrevious()} ? '' : 'disabled'">
+      <a class="page-link" th:href="'/admin/course-management?page=' + ${courses.number-1}+ '&size=' + ${courses.size}" >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+	
+    <li class="page-item" th:each="i : ${#numbers.sequence(0, courses.totalPages-1)}" th:classappend="${courses.number==i} ? 'active' : ''">
+		<a class="page-link" th:href="'/admin/course-management?page=' + ${i} + '&size=' + ${courses.size}" th:text="${i+1}"></a>
+	</li>
+	
+    <li class="page-item" th:classappend="${courses.hasNext()} ? '' : 'disabled'">
+      <a class="page-link" th:href="'/admin/course-management?page=' + ${courses.number+1} + '&size=' + ${courses.size}" >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+	
+  </ul>
+</nav>

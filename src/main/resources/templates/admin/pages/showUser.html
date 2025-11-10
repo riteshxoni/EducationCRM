@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Customer Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	
+   <div th:replace="admin/components/sidebar :: sidebar"></div>
+   
+    <div class="content">
+        <div id="Dashboard">
+            <h2>Customer Management</h2>
+            <p>Here is the complete information about user</p>
+            <div class="mt-5">
+                <div class="table-responsive">
+	      			<div class="h2">User Details</div>
+	                <table class="table table-striped table-bordered table-hover text-center" style="min-width: 800px;">
+	                    <tr>
+	                        <th>Name</th>
+	                        <th>Email</th>
+	                        <th>Phone No.</th>
+	                        <th>City</th>
+	                        <th>Ban Status</th>
+	                    </tr>
+	                    <tr>
+	                        <td th:text="${user.name}"></td>
+	                        <td th:text="${user.email}"></td>
+	                        <td th:text="${user.phoneno}"></td>
+	                        <td th:text="${user.city}"></td>
+	                        <td th:text="${user.banStatus}"></td>
+	                    </tr>
+	                </table>
+	            </div>
+	            <div class="table-responsive">
+	      			<div class="h2">Purchased Details</div>
+	                <table class="table table-striped table-bordered table-hover text-center" style="min-width: 800px;">
+	                    <tr>
+	                        <th>Course Name</th>
+	                        <th>Course Price</th>
+	                        <th>Date & Time</th>
+	                        <th>Order ID</th>
+	                        <th>Payment ID</th>
+	                    </tr>
+	                    <tr th:each="order : ${userOrders}">
+	                        <td th:text="${order.courseName}"></td>
+	                        <td th:text="${order.coursePrice}"></td>
+	                        <td th:text="${order.dateOfPurchase}"></td>
+	                        <td th:text="${order.orderId}"></td>
+	                        <td th:text="${order.rzpPaymentId}"></td>
+	                    </tr>
+	                </table>
+	            </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

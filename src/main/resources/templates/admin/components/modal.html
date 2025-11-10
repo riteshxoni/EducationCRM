@@ -1,0 +1,38 @@
+<div th:fragment="modal"> 
+	<!-- Modal -->
+	<div class="modal fade " id="deleteModal">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Confirmation</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+	      </div>
+	      <div class="modal-body">
+	        Are you sure want to delete this ? 
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+	        <button type="button" class="btn btn-danger" id="yesBtn">Confirm</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<script>
+		
+		function confirmDelete(event, url)
+		{
+			event.preventDefault();
+			let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+			deleteModal.show();
+			
+			const yesBtn = document.getElementById("yesBtn");
+			yesBtn.onclick = function()
+			{
+				deleteModal.hide();
+				window.location.href=url;
+			}
+		}
+		
+	</script>	
+</div>

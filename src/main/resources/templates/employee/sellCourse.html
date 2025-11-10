@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARProgramming | Employee Sell Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/emp_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	<div th:replace="/employee/components/sidebar :: sidebar"></div>
+	<main>
+	       <div class="content">
+	           <div class="border-bottom mb-4">
+	               <h2 th:text="'Welcome : '+${employee.name}"></h2>
+	               <p>Employee Panel</p>
+	           </div>
+	           
+	           <div class="row g-4 justify-content-center">
+	               <div class="col-12 text-center">
+	                   <h2>Sell Course</h2>
+	               </div>
+				   <div class="col-12">
+	                   <div class="card p-3 mx-auto " style="width: 70%;">
+						   <div th:if="${success}" class="alert alert-success my-3"><span th:text="${success}"></span></div>
+						   <div th:if="${error}" class="alert alert-danger my-3"><span th:text="${error}"></span></div>
+	                       <form action="/employee/sellCourse" method="post" th:object="${order}">
+							
+							   <label class="form-label text-secondary">Employee Email :</label>
+							   <input type="text" th:field="*{employeeEmail}" class="form-control my-1">
+							   
+	                           <label class="form-label text-secondary">Course Name :</label>
+	                           <select id="courseName" name="courseName" class="form-control my-2">
+	                               <option value="" disabled selected>Select Course</option>
+	                               <option th:each="name : ${courseNames}" th:value="${name}" th:text="${name}"></option>
+	                           </select>
+							   
+	                           <label class="form-label text-secondary">Course Amount :</label>
+	                           <input id="price" type="text" name="coursePrice" class="form-control my-2">
+							   
+	                           <label class="form-label text-secondary">User Email :</label>
+	                           <input type="text" name="userEmail" class="form-control my-1">
+	                           <label class="form-label text-secondary">Transaction Id :</label>
+	                           <input type="text" name="rzpPaymentId" class="form-control my-1">
+	                           <label class="form-label text-secondary">Order Id :</label>
+	                           <input type="text" th:field="*{orderId}" class="form-control my-1">
+							   <label class="form-label text-secondary">Date Of Purchase :</label>
+							   <input type="text" id="datetime" name="dateOfPurchase" class="form-control my-1" readonly>
+	                           <button type="submit" class="btn btn-primary my-2">Sell Course</button>
+	                       </form>
+	                   </div>
+	               </div>
+	           </div>
+	       </div>
+	   </main>
+	   <script>
+		
+		function setDateTime() {
+		    let date = new Date();
+		    let dateOfPurchase = date.toLocaleDateString('en-GB') + ", " +
+		                         date.toLocaleTimeString('en-GB', { hour12: true });
+		    document.getElementById("datetime").value = dateOfPurchase;
+		  }
+		window.onload =	setDateTime;
+		
+		document.getElementById("courseName").onchange = function(){
+			name = this.value;
+			let obj = new XMLHttpRequest();
+			obj.open("GET", "/employee/course/price?name=" + encodeURIComponent(name), true);
+			obj.send();
+		
+			obj.onreadystatechange = function()
+			{
+				if(obj.readyState === 4 && obj.status === 200)
+				{
+					document.getElementById("price").value = obj.responseText;				
+				}
+			}
+		}
+	   </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

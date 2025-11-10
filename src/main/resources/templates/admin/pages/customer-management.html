@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Customer Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	
+	<div th:replace="admin/components/sidebar :: sidebar"></div>
+	
+    <div class="content">
+        <div id="Dashboard">
+            <h2 class="fs-1">Customer Management</h2>
+            <p>Here you can manage Customers</p>
+
+            <h1 class="text-center my-4">All Customers</h1>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover text-center" style="min-width: 800px;">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone No.</th>
+                        <th>City</th>
+                        <th>Ban Status</th>
+                        <th>More</th>
+                        <th>Ban</th>
+                        <th>Unban</th>
+                    </tr>
+                    <tr th:each="user : ${customers.content}">
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.phoneno}"></td>
+                        <td th:text="${user.city}"></td>
+                        <td th:text="${user.banStatus}"></td>
+                        <td class="text-center"><a th:href="'/admin/showUser?id='+${user.id}" class="text-decoration-none px-1 rounded fs-4 bg-secondary text-white"><i class="bi bi-info-circle"></i></a></td>
+                        <td class="text-center"><a th:href="'/admin/status?id='+${user.id}+'&status='+${true}" class="text-decoration-none px-1 rounded fs-4 bg-danger text-white"><i class="bi bi-ban"></i></a></td>
+                        <td class="text-center"><a th:href="'/admin/status?id='+${user.id}+'&status='+${false}" class="text-decoration-none px-1 rounded fs-4 bg-success text-white"><i class="bi bi-check-circle"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+           
+        </div>
+        <nav class="mt-5">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${customers.hasPrevious()} ? '' : 'disabled'">
+                    <a class="page-link" th:href="'/admin/customer-management?page='+${customers.number-1}+'&size='+${customers.size}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, customers.totalPages-1)}" th:classappend="${customers.number==i ? 'active' : ''}">
+                	<a class="page-link" th:href="'/admin/customer-management?page='+${i}+'&size='+${customers.size}" th:text="${i+1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${customers.hasNext()} ? '' : 'disabled'">
+                <a class="page-link" th:href="'/admin/customer-management?page='+${customers.number+1}+'&size='+${customers.size}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

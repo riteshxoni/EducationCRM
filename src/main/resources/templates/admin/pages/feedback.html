@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin | Feedback</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+	
+	<div th:replace="admin/components/sidebar :: sidebar"></div>
+	<div th:replace="admin/components/findById :: findById"></div>
+    <div class="content">
+        <div id="Dashboard">
+            <h2 class="fs-1">Feedback Management</h2>
+            <p>Here you can manage Feedbacks</p>
+
+            <h1 class="text-center my-4">All Feedbacks</h1>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover text-center" style="min-width: 800px;">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Message</th>
+                        <th>Read</th>
+                    </tr>
+                    <tr th:each="feedback : ${feedbacks.content}">
+                        <td th:text="${feedback.std_name}"></td>
+                        <td th:text="${feedback.std_email}"></td>
+                        <td th:text="${feedback.std_course}"></td>
+                        <td th:text="${feedback.std_message}"></td>
+                        
+                        <td th:if="${feedback.status}" class="text-center"><a href="#" class="text-decoration-none px-1 rounded fs-4 bg-success text-white" th:data-id="${feedback.id}" onclick="showdata(event, this.getAttribute('data-id'))"><i class="bi bi-envelope-check"></i></a></td>
+                        <td th:unless="${feedback.status}" class="text-center"><a href="#" class="text-decoration-none px-1 rounded fs-4 bg-primary text-white" th:data-id="${feedback.id}" onclick="showdata(event, this.getAttribute('data-id'))"><i class="bi bi-envelope"></i></a></td>
+                    </tr>
+                </table>
+            </div>
+           
+        </div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${feedbacks.hasPrevious()} ? '' : 'disabled'">
+                    <a class="page-link" th:href="'/admin/feedback?page='+${feedbacks.number-1}+'&size='+${feedbacks.size}" >Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, feedbacks.totalPages-1)}" th:classappend="${feedbacks.number==i} ? 'active' : ''">
+                	<a class="page-link" th:href="'/admin/feedback?page='+${i}+'&size='+${feedbacks.size}" th:text="${i+1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${feedbacks.hasNext()} ? '' : 'disabled'">
+                	<a class="page-link" th:href="'/admin/feedback?page='+${feedbacks.number+1}+'&size='+${feedbacks.size}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="feedback">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalLabel">Full Feedback</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="my-3"><span class="fs-5">Name : </span> 	<span id="name"></span></div>
+	        <div class="my-3"><span class="fs-5">Email : </span> 	<span id="email"></span></div>
+	        <div class="my-3"><span class="fs-5">Course : </span> 	<span id="course"></span></div>
+	        <div class="my-3"><span class="fs-5">Message : </span> 	<span id="msg"></span></div>
+	        <div class="my-3"><span class="fs-5">Date : </span> 	<span id="date"></span></div>
+	        <div class="my-3"><span class="fs-5">Time : </span> 	<span id="time"></span></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+	        <a href="" id="read" class="btn btn-success">Mark As Read</a>
+	        <a href="" id="unread" class="btn btn-warning text-white">Mark As Unread</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ></script>
+  </body>
+</html>

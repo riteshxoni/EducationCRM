@@ -1,0 +1,39 @@
+<!-- NavBar Start-->
+     <nav class="navbar navbar-expand-lg bg-primary" th:fragment="header">
+        <div class="container">
+            <a class="navbar-brand d-flex gap-2 align-items-center" href="/">
+                <img src="./img/arprogramminglogo.png" alt="ARProgramming Logo" height="50px" class="rounded-circle d-block">
+                <span class="h3 text-white d-block pt-2">AR Programming</span> 
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" >
+                <i class="bi bi-list text-white fs-1"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-4">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/">Home</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                            More
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Online Batch Details</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">About Us</a></li>
+                            <li><a class="dropdown-item" href="#">Contact Us</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div>
+                    <a href="/login" class="btn btn-light btn-sm">Login</a>
+                    <a href="/register" class="btn btn-info text-white btn-sm ms-2">SignUp</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+<!-- NavBar End-->
